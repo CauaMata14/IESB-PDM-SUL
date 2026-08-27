@@ -5,13 +5,13 @@ Disciplina: Programação para Dispositivos Móveis (React Native / Expo)
 Professor: Marcelo Alves Farias — IESB
 Aulas relacionadas: 01, 02, 03 e 04
 
-## 🎯 Objetivo
+##  Objetivo
 
 Tela inicial de cadastro rápido de disciplinas do semestre, consolidando a
 criação de projeto Expo, Core Components, import/export, `StyleSheet` e
 Flexbox.
 
-## ⚙️ Comando usado para criar o projeto
+##  Comando usado para criar o projeto
 
 ```bash
 npx create-expo-app@latest MeuDiarioAcademico --template blank
@@ -24,7 +24,7 @@ vez de `npm install` direto):
 npx expo install react-native-safe-area-context
 ```
 
-## ▶️ Como rodar
+##  Como rodar
 
 ```bash
 cd MeuDiarioAcademico
@@ -35,7 +35,7 @@ npx expo start
 Escaneie o QR Code com o app **Expo Go** (Android) ou rode em um emulador
 Android (`a` no terminal do Metro).
 
-## 🗂️ Estrutura
+##  Estrutura
 
 ```text
 MeuDiarioAcademico/
@@ -45,7 +45,7 @@ MeuDiarioAcademico/
 └── assets/       # Ícones e imagens padrão do template
 ```
 
-## 🧩 Requisitos atendidos
+##  Requisitos atendidos
 
 - **Organização de código**: `labels.js` exporta as constantes de texto
   (título, placeholder, botão, título da lista, label do switch),
@@ -65,12 +65,10 @@ MeuDiarioAcademico/
   "pressionado") e `Switch` "Mostrar apenas obrigatórias" — já filtra
   visualmente a lista estática ao ser ativado.
 
-## 📱 Prints da tela
+##  Prints da tela
 
-> Substitua os placeholders abaixo pelas capturas de tela reais do app
-> rodando no emulador Android ou no Expo Go (não foi possível gerar
-> screenshots automaticamente neste ambiente, por não haver emulador/
-> dispositivo conectado).
+[alt text](image.png)
+
 
 | Tela inicial | Switch ativado |
 | --- | --- |
@@ -80,7 +78,7 @@ Para capturar: com o app aberto no Expo Go ou emulador, tire um print da
 tela e salve os arquivos na pasta `docs/` deste projeto com os nomes acima
 (ou ajuste os nomes/caminhos neste README).
 
-## 🔀 Entrega (fluxo Git sugerido)
+##  Entrega (fluxo Git sugerido)
 
 ```bash
 git checkout -b feature/atividade01-pratica04
