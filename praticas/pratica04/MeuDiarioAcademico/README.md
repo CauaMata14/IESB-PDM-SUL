@@ -67,16 +67,9 @@ MeuDiarioAcademico/
 
 ##  Prints da tela
 
-[alt text](image.png)
-
-
-| Tela inicial | Switch ativado |
+| Tela inicial | Switch ativado (filtra obrigatórias) |
 | --- | --- |
-| `docs/print-tela-inicial.png` | `docs/print-switch-ativado.png` |
-
-Para capturar: com o app aberto no Expo Go ou emulador, tire um print da
-tela e salve os arquivos na pasta `docs/` deste projeto com os nomes acima
-(ou ajuste os nomes/caminhos neste README).
+| ![Tela inicial](docs/print-tela-inicial.png) | ![Switch ativado](docs/print-switch-ativado.png) |
 
 ##  Entrega (fluxo Git sugerido)
 
@@ -87,6 +80,5 @@ git commit -m "Feat: Atividade 01 - tela inicial do MeuDiarioAcademico"
 git push origin feature/atividade01-pratica04
 ```
 
-Em seguida, abra o Pull Request e cole o link aqui:
+- **Link do PR**: https://github.com/CauaMata14/IESB-PDM-SUL/pull/2
 
-- **Link do PR**: _adicionar após abrir o PR_
