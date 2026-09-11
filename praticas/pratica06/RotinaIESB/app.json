@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "RotinaIESB",
+    "slug": "rotinaiesb",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#d63031"
+    },
+    "ios": { "supportsTablet": true },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#d63031"
+      }
+    },
+    "web": { "favicon": "./assets/favicon.png" }
+  }
+}
