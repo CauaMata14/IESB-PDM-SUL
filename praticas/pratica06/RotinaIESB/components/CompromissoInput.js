@@ -35,12 +35,13 @@ const styles = StyleSheet.create({
     // flexDirection: 'row' -> input e botão lado a lado (Aula 04)
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
   input: {
-    // Largura percentual explícita (Aula 04): input ocupa ~68% da linha,
-    // deixando o restante para o botão.
-    width: '68%',
+    // Largura percentual explícita (Aula 04): input ocupa ~62% da linha,
+    // deixando o restante (via flex, no botão) livre pro texto "Adicionar"
+    // caber numa linha só em telas mais estreitas.
+    width: '62%',
+    marginRight: 8,
     borderWidth: 1,
     borderColor: '#ced6e0',
     borderRadius: 8,
@@ -49,12 +50,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   button: {
-    // flex ocupa o espaço restante (~28-30%) sem valor fixo em pixels
-    // (Aula 04: uso de flex).
-    flex: 0.28,
+    // flex: 1 ocupa todo o espaço restante da linha, sem valor fixo em
+    // pixels (Aula 04: uso de flex).
+    flex: 1,
     backgroundColor: '#3742fa',
     borderRadius: 8,
     paddingVertical: 12,
+    paddingHorizontal: 4,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -64,5 +66,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
+    fontSize: 14,
   },
 });
