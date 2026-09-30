@@ -79,4 +79,4 @@ git commit -m "Feat: Atividade Screen - navegacao Bottom Tabs + Native Stack"
 git push origin feature/atividade-screen
 ```
 
-- **Link do PR**: _(adicionado após abrir o PR)_
+- **Link do PR**: https://github.com/CauaMata14/IESB-PDM-SUL/pull/5
