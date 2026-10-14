@@ -4,10 +4,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
-import DespesasRecentes from './screens/DespesasRecentes';
-import TodasDespesas from './screens/TodasDespesas';
-import GerenciarDespesa from './screens/GerenciarDespesa';
-import IconButton from './components/IconButton';
+import DespesasRecentes from './src/screens/DespesasRecentes';
+import TodasDespesas from './src/screens/TodasDespesas';
+import GerenciarDespesa from './src/screens/GerenciarDespesa';
+import IconButton from './src/components/IconButton';
+import { DespesasProvider } from './src/store/despesas-context';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -59,19 +60,22 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Despesas"
-            component={BottomTabScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="GerenciarDespesa"
-            component={GerenciarDespesa}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      {/* Contexto com o array de despesas, compartilhado entre as telas */}
+      <DespesasProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Despesas"
+              component={BottomTabScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="GerenciarDespesa"
+              component={GerenciarDespesa}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </DespesasProvider>
     </>
   );
 }
