@@ -1,31 +1,77 @@
-import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { useMemo, useState } from 'react';
+import { Alert, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 import CategoriaSeletor from '../components/despesa/CategoriaSeletor';
 import DespesaSaida from '../components/despesa/DespesaSaida';
-import { CATEGORIAS, TODAS_CATEGORIAS } from '../constants/categorias';
-import { useDespesas } from '../store/despesas-context';
-import { filtrarPorCategoria } from '../util/filtro';
+import { ALL_CATEGORIES, CATEGORIES } from '../constants/categories';
+import { useDebounce } from '../hooks/useDebounce';
+import { useThemeColors } from '../hooks/useThemeColors';
+import { useExpenses } from '../store/expenses-context';
+import { filtrarPorCategoria, filtrarPorDescricao } from '../util/filtro';
 
 export default function TodasDespesas() {
-  const { despesas } = useDespesas();
-  const [filtro, setFiltro] = useState(TODAS_CATEGORIAS);
+  const { expenses, clearExpenses } = useExpenses();
+  const colors = useThemeColors();
 
-  const despesasFiltradas = filtrarPorCategoria(despesas, filtro);
+  const [busca, setBusca] = useState('');
+  const [categoria, setCategoria] = useState(ALL_CATEGORIES);
+  const buscaComAtraso = useDebounce(busca, 300);
+
+  // Busca + filtro por categoria; o total do sumário usa esta mesma lista
+  const despesasFiltradas = useMemo(
+    () => filtrarPorDescricao(filtrarPorCategoria(expenses, categoria), buscaComAtraso),
+    [expenses, categoria, buscaComAtraso]
+  );
+
+  const temFiltro = buscaComAtraso.trim() !== '' || categoria !== ALL_CATEGORIES;
+
+  function limparTudo() {
+    Alert.alert('Limpar tudo', 'Deseja apagar todas as despesas?', [
+      { text: 'Cancelar', style: 'cancel' },
+      { text: 'Apagar', style: 'destructive', onPress: clearExpenses },
+    ]);
+  }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.filtro}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <View style={styles.filtros}>
+        <View
+          style={[styles.busca, { backgroundColor: colors.card, borderColor: colors.border }]}
+        >
+          <Ionicons name="search" size={18} color={colors.textMuted} />
+          <TextInput
+            style={[styles.inputBusca, { color: colors.text }]}
+            placeholder="Buscar por descrição"
+            placeholderTextColor={colors.textMuted}
+            value={busca}
+            onChangeText={setBusca}
+            autoCorrect={false}
+          />
+        </View>
         <CategoriaSeletor
-          opcoes={[TODAS_CATEGORIAS, ...CATEGORIAS]}
-          selecionada={filtro}
-          onSelecionar={setFiltro}
+          opcoes={[ALL_CATEGORIES, ...CATEGORIES]}
+          selecionada={categoria}
+          onSelecionar={setCategoria}
         />
+        {expenses.length > 0 && (
+          <Pressable
+            onPress={limparTudo}
+            style={({ pressed }) => [styles.limpar, pressed && styles.pressionado]}
+          >
+            <Ionicons name="trash-outline" size={16} color={colors.error} />
+            <Text style={[styles.textoLimpar, { color: colors.error }]}>Limpar tudo</Text>
+          </Pressable>
+        )}
       </View>
       <DespesaSaida
-        despesas={despesasFiltradas}
-        periodo={filtro === TODAS_CATEGORIAS ? 'Total' : `Total em ${filtro}`}
-        textoVazio="Nenhuma despesa cadastrada nesta categoria."
+        expenses={despesasFiltradas}
+        periodo="Total"
+        emptyText={
+          temFiltro
+            ? 'Nenhuma despesa encontrada para esta busca.'
+            : 'Nenhuma despesa. Toque em + para adicionar.'
+        }
       />
     </View>
   );
@@ -35,8 +81,36 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  filtro: {
+  filtros: {
     paddingHorizontal: 16,
     paddingTop: 12,
+    paddingBottom: 8,
+    gap: 10,
+  },
+  busca: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+  },
+  inputBusca: {
+    flex: 1,
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    fontSize: 15,
+  },
+  limpar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+    gap: 4,
+  },
+  textoLimpar: {
+    fontSize: 13,
+    fontWeight: 'bold',
+  },
+  pressionado: {
+    opacity: 0.5,
   },
 });

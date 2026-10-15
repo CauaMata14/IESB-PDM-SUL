@@ -1,14 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer } from '@react-navigation/native';
+import { useColorScheme } from 'react-native';
+import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 
 import DespesasRecentes from './src/screens/DespesasRecentes';
 import TodasDespesas from './src/screens/TodasDespesas';
 import GerenciarDespesa from './src/screens/GerenciarDespesa';
 import IconButton from './src/components/IconButton';
-import { DespesasProvider } from './src/store/despesas-context';
+import { Colors } from './src/constants/theme';
+import { ExpensesContextProvider } from './src/store/expenses-context';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -57,12 +60,30 @@ function BottomTabScreen() {
 }
 
 export default function App() {
+  const scheme = useColorScheme();
+  const isDark = scheme === 'dark';
+  const colors = isDark ? Colors.dark : Colors.light;
+
+  // Cabeçalhos e barra de abas acompanham o tema do sistema
+  const baseTheme = isDark ? DarkTheme : DefaultTheme;
+  const navigationTheme = {
+    ...baseTheme,
+    colors: {
+      ...baseTheme.colors,
+      primary: colors.primary,
+      background: colors.background,
+      card: colors.card,
+      text: colors.text,
+      border: colors.border,
+    },
+  };
+
   return (
-    <>
+    <SafeAreaProvider>
       <StatusBar style="auto" />
-      {/* Contexto com o array de despesas, compartilhado entre as telas */}
-      <DespesasProvider>
-        <NavigationContainer>
+      {/* Estado global das despesas, compartilhado entre todas as telas */}
+      <ExpensesContextProvider>
+        <NavigationContainer theme={navigationTheme}>
           <Stack.Navigator>
             <Stack.Screen
               name="Despesas"
@@ -75,7 +96,7 @@ export default function App() {
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </DespesasProvider>
-    </>
+      </ExpensesContextProvider>
+    </SafeAreaProvider>
   );
 }

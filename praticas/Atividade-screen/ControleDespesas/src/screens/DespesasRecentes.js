@@ -1,36 +1,43 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import CategoriaSeletor from '../components/despesa/CategoriaSeletor';
 import DespesaSaida from '../components/despesa/DespesaSaida';
-import { CATEGORIAS, TODAS_CATEGORIAS } from '../constants/categorias';
-import { useDespesas } from '../store/despesas-context';
+import { ALL_CATEGORIES, CATEGORIES } from '../constants/categories';
+import { useThemeColors } from '../hooks/useThemeColors';
+import { useExpenses } from '../store/expenses-context';
 import { getDataMenosDias } from '../util/data';
 import { filtrarPorCategoria } from '../util/filtro';
 
 export default function DespesasRecentes() {
-  const { despesas } = useDespesas();
-  const [filtro, setFiltro] = useState(TODAS_CATEGORIAS);
+  const { expenses } = useExpenses();
+  const colors = useThemeColors();
+  const [categoria, setCategoria] = useState(ALL_CATEGORIES);
 
-  // Despesas dos últimos 7 dias
-  const seteDiasAtras = getDataMenosDias(new Date(), 7);
-  const despesasRecentes = despesas.filter((despesa) => despesa.data >= seteDiasAtras);
-
-  const despesasFiltradas = filtrarPorCategoria(despesasRecentes, filtro);
+  // Despesas dos últimos 7 dias, calculadas a partir da lista global
+  const despesasRecentes = useMemo(() => {
+    const seteDiasAtras = getDataMenosDias(new Date(), 7);
+    const recentes = expenses.filter((expense) => expense.date >= seteDiasAtras);
+    return filtrarPorCategoria(recentes, categoria);
+  }, [expenses, categoria]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.filtro}>
         <CategoriaSeletor
-          opcoes={[TODAS_CATEGORIAS, ...CATEGORIAS]}
-          selecionada={filtro}
-          onSelecionar={setFiltro}
+          opcoes={[ALL_CATEGORIES, ...CATEGORIES]}
+          selecionada={categoria}
+          onSelecionar={setCategoria}
         />
       </View>
       <DespesaSaida
-        despesas={despesasFiltradas}
+        expenses={despesasRecentes}
         periodo="Últimos 7 dias"
-        textoVazio="Nenhuma despesa nos últimos 7 dias nesta categoria."
+        emptyText={
+          categoria === ALL_CATEGORIES
+            ? 'Nenhuma despesa nos últimos 7 dias. Toque em + para adicionar.'
+            : 'Nenhuma despesa recente nesta categoria.'
+        }
       />
     </View>
   );
@@ -43,5 +50,6 @@ const styles = StyleSheet.create({
   filtro: {
     paddingHorizontal: 16,
     paddingTop: 12,
+    paddingBottom: 8,
   },
 });
