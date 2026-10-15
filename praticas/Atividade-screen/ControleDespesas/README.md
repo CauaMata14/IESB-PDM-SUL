@@ -172,4 +172,4 @@ git push origin feature/atividade-aula09
 
 - **PR da Atividade Screen**: https://github.com/CauaMata14/IESB-PDM-SUL/pull/5
 - **PR da Expansão do Gerenciador**: https://github.com/CauaMata14/IESB-PDM-SUL/pull/6
-- **PR do Gerenciador 2.0 (Aula 09)**: _(adicionado após abrir o PR)_
+- **PR do Gerenciador 2.0 (Aula 09)**: https://github.com/CauaMata14/IESB-PDM-SUL/pull/7
