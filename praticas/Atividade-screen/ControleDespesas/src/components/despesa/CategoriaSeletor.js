@@ -1,10 +1,11 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, useColorScheme } from 'react-native';
 
-import { useThemeColors } from '../../hooks/useThemeColors';
+import { getThemeColors } from '../../constants/theme';
 
 // Chips de categoria lado a lado, usados como filtro acima das listas
 export default function CategoriaSeletor({ opcoes, selecionada, onSelecionar }) {
-  const colors = useThemeColors();
+  const scheme = useColorScheme();
+  const colors = getThemeColors(scheme);
 
   return (
     <View style={styles.container}>

@@ -29,3 +29,8 @@ export const Colors = {
     overlay: 'rgba(0, 0, 0, 0.6)',
   },
 };
+
+// Recebe o valor de useColorScheme() e devolve as cores do modo correspondente
+export function getThemeColors(scheme) {
+  return scheme === 'dark' ? Colors.dark : Colors.light;
+}

@@ -21,6 +21,7 @@ npm install @react-navigation/native @react-navigation/bottom-tabs @react-naviga
 npx expo install react-native-screens react-native-safe-area-context @expo/vector-icons
 npx expo install @react-native-community/datetimepicker
 npx expo install @react-native-async-storage/async-storage
+npx expo install expo-system-ui
 ```
 
 ## Como rodar
@@ -50,10 +51,9 @@ ControleDespesas/
     │       └── CategoriaSeletor.js # Chips de categoria (filtro)
     ├── constants/
     │   ├── categories.js           # CATEGORIES
-    │   └── theme.js                # Cores dos modos claro e escuro
+    │   └── theme.js                # Cores dos modos claro e escuro + getThemeColors
     ├── hooks/
-    │   ├── useDebounce.js          # useEffect + clearTimeout
-    │   └── useThemeColors.js       # useColorScheme → cores do theme.js
+    │   └── useDebounce.js          # useEffect + clearTimeout
     ├── store/
     │   └── expenses-context.js     # Context + expensesReducer + AsyncStorage
     ├── screens/
@@ -135,10 +135,17 @@ cadastrado. Nenhuma biblioteca de estado ou de formulário foi usada.
   descrição ignora maiúsculas/minúsculas e a lista filtrada é calculada em
   `useMemo`. Quantidade e total refletem a busca.
 - [`theme.js`](./src/constants/theme.js) define as cores dos modos claro
-  e escuro. O hook `useThemeColors` usa `useColorScheme` e é aplicado nas
-  três telas, nos componentes da lista e no tema da navegação (cabeçalhos
-  e abas). O `app.json` usa `"userInterfaceStyle": "automatic"` para o
-  app acompanhar o sistema.
+  e escuro (`Colors.light` e `Colors.dark`) e a função
+  `getThemeColors(scheme)`. As três telas e os componentes da lista
+  chamam `useColorScheme()` e passam o resultado para
+  `getThemeColors`. O `App.js` faz o mesmo para o tema da navegação
+  (cabeçalhos e barra de abas).
+- O `app.json` usa `"userInterfaceStyle": "automatic"` (com o
+  `expo-system-ui` instalado, que o Android exige) para o app acompanhar
+  o tema do sistema.
+- O botão ☀️/🌙 no canto esquerdo do cabeçalho alterna o tema dentro do
+  app com `Appearance.setColorScheme`, o que facilita os prints. Depois
+  de usá-lo, o app deixa de seguir o tema do sistema até ser reaberto.
 - Os cards têm sombra com `Platform.select` (`shadow*` no iOS,
   `elevation` no Android).
 

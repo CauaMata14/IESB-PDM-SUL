@@ -1,17 +1,18 @@
 import { useMemo, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, useColorScheme } from 'react-native';
 
 import CategoriaSeletor from '../components/despesa/CategoriaSeletor';
 import DespesaSaida from '../components/despesa/DespesaSaida';
 import { ALL_CATEGORIES, CATEGORIES } from '../constants/categories';
-import { useThemeColors } from '../hooks/useThemeColors';
+import { getThemeColors } from '../constants/theme';
 import { useExpenses } from '../store/expenses-context';
 import { getDataMenosDias } from '../util/data';
 import { filtrarPorCategoria } from '../util/filtro';
 
 export default function DespesasRecentes() {
   const { expenses } = useExpenses();
-  const colors = useThemeColors();
+  const scheme = useColorScheme();
+  const colors = getThemeColors(scheme);
   const [categoria, setCategoria] = useState(ALL_CATEGORIES);
 
   // Despesas dos últimos 7 dias, calculadas a partir da lista global

@@ -1,12 +1,13 @@
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, View, useColorScheme } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { useThemeColors } from '../../hooks/useThemeColors';
+import { getThemeColors } from '../../constants/theme';
 import { getDataFormatada } from '../../util/data';
 
 export default function DespesaItem({ id, description, amount, date, category }) {
   const navigation = useNavigation();
-  const colors = useThemeColors();
+  const scheme = useColorScheme();
+  const colors = getThemeColors(scheme);
 
   function editarDespesa() {
     navigation.navigate('GerenciarDespesa', { expenseId: id });

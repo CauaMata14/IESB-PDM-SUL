@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, useColorScheme } from 'react-native';
 
-import { useThemeColors } from '../../hooks/useThemeColors';
+import { getThemeColors } from '../../constants/theme';
 
 const LIMITE_ALERTA = 200;
 
 export default function DespesaSumario({ expenses, periodo }) {
-  const colors = useThemeColors();
+  const scheme = useColorScheme();
+  const colors = getThemeColors(scheme);
 
   const somaDespesas = expenses.reduce(
     (acumulador, item) => acumulador + item.amount,

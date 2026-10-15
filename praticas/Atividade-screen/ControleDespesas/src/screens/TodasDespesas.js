@@ -1,18 +1,19 @@
 import { useMemo, useState } from 'react';
-import { Alert, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, Text, TextInput, View, useColorScheme } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import CategoriaSeletor from '../components/despesa/CategoriaSeletor';
 import DespesaSaida from '../components/despesa/DespesaSaida';
 import { ALL_CATEGORIES, CATEGORIES } from '../constants/categories';
 import { useDebounce } from '../hooks/useDebounce';
-import { useThemeColors } from '../hooks/useThemeColors';
+import { getThemeColors } from '../constants/theme';
 import { useExpenses } from '../store/expenses-context';
 import { filtrarPorCategoria, filtrarPorDescricao } from '../util/filtro';
 
 export default function TodasDespesas() {
   const { expenses, clearExpenses } = useExpenses();
-  const colors = useThemeColors();
+  const scheme = useColorScheme();
+  const colors = getThemeColors(scheme);
 
   const [busca, setBusca] = useState('');
   const [categoria, setCategoria] = useState(ALL_CATEGORIES);

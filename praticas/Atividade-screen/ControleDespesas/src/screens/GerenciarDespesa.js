@@ -10,6 +10,7 @@ import {
   Text,
   TextInput,
   View,
+  useColorScheme,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Ionicons } from '@expo/vector-icons';
@@ -17,7 +18,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import IconButton from '../components/IconButton';
 import { CATEGORIES } from '../constants/categories';
-import { useThemeColors } from '../hooks/useThemeColors';
+import { getThemeColors } from '../constants/theme';
 import { useExpenses } from '../store/expenses-context';
 import { getDataFormatada, isDataFutura } from '../util/data';
 
@@ -44,7 +45,8 @@ function validate(values) {
 
 export default function GerenciarDespesa({ route, navigation }) {
   const { expenses, addExpense, updateExpense, deleteExpense } = useExpenses();
-  const colors = useThemeColors();
+  const scheme = useColorScheme();
+  const colors = getThemeColors(scheme);
   const insets = useSafeAreaInsets();
 
   const expenseId = route.params?.expenseId;

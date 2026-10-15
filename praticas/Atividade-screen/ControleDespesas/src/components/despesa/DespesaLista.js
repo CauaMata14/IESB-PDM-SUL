@@ -1,11 +1,12 @@
-import { FlatList, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { FlatList, StyleSheet, Text, useWindowDimensions, View, useColorScheme } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import DespesaItem from './DespesaItem';
-import { useThemeColors } from '../../hooks/useThemeColors';
+import { getThemeColors } from '../../constants/theme';
 
 export default function DespesaLista({ expenses, header, emptyText }) {
-  const colors = useThemeColors();
+  const scheme = useColorScheme();
+  const colors = getThemeColors(scheme);
   const { width } = useWindowDimensions();
 
   // Tablet ou celular deitado: lista em 2 colunas
