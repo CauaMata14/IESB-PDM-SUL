@@ -1,18 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import DespesaLista from './DespesaLista';
 import DespesaSumario from './DespesaSumario';
 
-// Recebe a lista (já filtrada pela tela) e repassa para o sumário e a lista
-export default function DespesaSaida({ despesas, periodo, textoVazio }) {
+const TEXTO_VAZIO_PADRAO = 'Nenhuma despesa. Toque em + para adicionar.';
+
+// Recebe a lista (já filtrada pela tela); o sumário vira o cabeçalho da FlatList
+export default function DespesaSaida({ expenses, periodo, emptyText = TEXTO_VAZIO_PADRAO }) {
   return (
     <View style={styles.container}>
-      <DespesaSumario despesas={despesas} periodo={periodo} />
-      {despesas.length > 0 ? (
-        <DespesaLista despesas={despesas} />
-      ) : (
-        <Text style={styles.textoVazio}>{textoVazio}</Text>
-      )}
+      <DespesaLista
+        expenses={expenses}
+        header={<DespesaSumario expenses={expenses} periodo={periodo} />}
+        emptyText={emptyText}
+      />
     </View>
   );
 }
@@ -20,13 +21,6 @@ export default function DespesaSaida({ despesas, periodo, textoVazio }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 12,
-  },
-  textoVazio: {
-    textAlign: 'center',
-    marginTop: 32,
-    fontSize: 15,
-    color: '#666666',
+    paddingHorizontal: 12,
   },
 });

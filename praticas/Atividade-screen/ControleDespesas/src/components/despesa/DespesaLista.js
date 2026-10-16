@@ -1,18 +1,64 @@
-import { FlatList } from 'react-native';
+import { FlatList, StyleSheet, Text, useWindowDimensions, View, useColorScheme } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 import DespesaItem from './DespesaItem';
+import { getThemeColors } from '../../constants/theme';
 
-function renderDespesaItem({ item }) {
-  return <DespesaItem {...item} />;
-}
+export default function DespesaLista({ expenses, header, emptyText }) {
+  const scheme = useColorScheme();
+  const colors = getThemeColors(scheme);
+  const { width } = useWindowDimensions();
 
-// A FlatList re-renderiza sozinha sempre que o array "despesas" muda
-export default function DespesaLista({ despesas }) {
+  // Tablet ou celular deitado: lista em 2 colunas
+  const numColumns = width > 600 ? 2 : 1;
+
+  function renderDespesaItem({ item }) {
+    return (
+      <View style={numColumns > 1 && styles.coluna}>
+        <DespesaItem {...item} />
+      </View>
+    );
+  }
+
   return (
     <FlatList
-      data={despesas}
+      // a FlatList não aceita trocar numColumns sem remontar
+      key={`colunas-${numColumns}`}
+      data={expenses}
       renderItem={renderDespesaItem}
       keyExtractor={(item) => item.id}
+      numColumns={numColumns}
+      ListHeaderComponent={header}
+      ListEmptyComponent={
+        <View style={styles.vazio}>
+          <Ionicons name="receipt-outline" size={56} color={colors.textMuted} />
+          <Text style={[styles.textoVazio, { color: colors.textMuted }]}>
+            {emptyText}
+          </Text>
+        </View>
+      }
+      contentContainerStyle={styles.conteudo}
+      keyboardShouldPersistTaps="handled"
     />
   );
 }
+
+const styles = StyleSheet.create({
+  conteudo: {
+    paddingBottom: 24,
+  },
+  // Em 2 colunas, cada card ocupa metade da largura
+  coluna: {
+    flex: 1,
+  },
+  vazio: {
+    alignItems: 'center',
+    marginTop: 48,
+    paddingHorizontal: 24,
+  },
+  textoVazio: {
+    marginTop: 12,
+    fontSize: 15,
+    textAlign: 'center',
+  },
+});

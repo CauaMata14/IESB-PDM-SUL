@@ -1,8 +1,12 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, useColorScheme } from 'react-native';
 
-// Botões (Pressable) lado a lado para escolher uma categoria.
-// Usado no formulário (seleção) e nas telas de listagem (filtro).
+import { getThemeColors } from '../../constants/theme';
+
+// Chips de categoria lado a lado, usados como filtro acima das listas
 export default function CategoriaSeletor({ opcoes, selecionada, onSelecionar }) {
+  const scheme = useColorScheme();
+  const colors = getThemeColors(scheme);
+
   return (
     <View style={styles.container}>
       {opcoes.map((opcao) => {
@@ -13,11 +17,20 @@ export default function CategoriaSeletor({ opcoes, selecionada, onSelecionar }) 
             onPress={() => onSelecionar(opcao)}
             style={({ pressed }) => [
               styles.opcao,
-              ativa && styles.opcaoAtiva,
+              { borderColor: colors.primary, backgroundColor: colors.card },
+              ativa && { backgroundColor: colors.primary },
               pressed && styles.pressionado,
             ]}
           >
-            <Text style={[styles.texto, ativa && styles.textoAtivo]}>{opcao}</Text>
+            <Text
+              style={[
+                styles.texto,
+                { color: ativa ? colors.onPrimary : colors.primary },
+                ativa && styles.textoAtivo,
+              ]}
+            >
+              {opcao}
+            </Text>
           </Pressable>
         );
       })}
@@ -36,21 +49,14 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#3e04c3',
-    backgroundColor: '#ffffff',
-  },
-  opcaoAtiva: {
-    backgroundColor: '#3e04c3',
   },
   pressionado: {
     opacity: 0.5,
   },
   texto: {
-    color: '#3e04c3',
     fontSize: 13,
   },
   textoAtivo: {
-    color: '#ffffff',
     fontWeight: 'bold',
   },
 });
