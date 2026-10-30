@@ -130,4 +130,4 @@ git push origin feature/pratica08-campus-go
 Em seguida, abra o Pull Request (sem `node_modules` e sem `.env`) e cole o
 link aqui:
 
-- **Link do PR**: _adicionar após abrir o PR_
+- **Link do PR**: https://github.com/CauaMata14/IESB-PDM-SUL/pull/8
