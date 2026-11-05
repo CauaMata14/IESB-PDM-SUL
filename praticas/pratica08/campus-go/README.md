@@ -114,9 +114,15 @@ campus-go/
 
 ## Prints do PR
 
-| As 4 abas | Detalhe `/task/42` | Modal "Nova tarefa" | Bolso + compartilhar | Perfil com foto | Check-in | Mural de avisos | Erro + "Tentar novamente" |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| _adicionar_ | _adicionar_ | _adicionar_ | _adicionar_ | _adicionar_ | _adicionar_ | _adicionar_ | _adicionar_ |
+| As 4 abas / Mural | Detalhe `/task/42` | Modal "Nova tarefa" | Bolso + compartilhar |
+| --- | --- | --- | --- |
+| ![Abas e mural](./docs/print-abas.png) | ![Detalhe da tarefa](./docs/print-detalhe-tarefa.png) | ![Modal Nova tarefa](./docs/print-modal-nova-tarefa.png) | ![Bolso e compartilhar](./docs/print-bolso-compartilhar.png) |
+
+| Perfil com foto | Check-in | Erro + "Tentar novamente" |
+| --- | --- | --- |
+| ![Perfil com foto](./docs/print-perfil-foto.png) | ![Check-in](./docs/print-checkin.png) | ![Erro e tentar novamente](./docs/print-erro-tentar-novamente.png) |
+
+> O check-in mostra o Alert de permissão/falha em vez de um endereço: o emulador usado não entrega uma localização simulada via `adb` para o provedor fundido do Google Play, só pela UI do Extended Controls. Em um dispositivo real (ou configurando a localização pela UI do emulador) o fluxo de sucesso mostra `place.label` normalmente.
 
 ## Entrega (fluxo Git)
 
