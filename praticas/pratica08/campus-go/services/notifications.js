@@ -37,10 +37,17 @@ async function ensureAndroidChannel(Notifications) {
   if (Platform.OS !== 'android') {
     return;
   }
-  await Notifications.setNotificationChannelAsync('default', {
-    name: 'CampusGo',
-    importance: Notifications.AndroidImportance.DEFAULT,
-  });
+  try {
+    await Notifications.setNotificationChannelAsync('default', {
+      name: 'CampusGo',
+      importance: Notifications.AndroidImportance.DEFAULT,
+    });
+  } catch (error) {
+    // Em alguns ambientes (Expo Go sem dev build) o provider de canais
+    // nativo falha ao ser criado; seguimos sem o canal explícito em vez de
+    // impedir o agendamento do lembrete.
+    console.warn('Não foi possível criar o canal de notificação:', error);
+  }
 }
 
 // Agenda um lembrete local em `seconds` segundos. Devolve false (sem lançar
